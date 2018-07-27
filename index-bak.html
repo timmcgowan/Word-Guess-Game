@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Word Guess Game!</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> 
+    <script src="assets/js/wguess.js"></script> 
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  <body>
+
+<script>
+  // Creating our word object.
+  var car = {
+
+  // Properties of our car object.
+  make: "Honda",
+  model: "Fit",
+  color: "Blue Raspberry",
+  mileage: 3000,
+  isWorking: true,
+
+      // Creating the driveToWork method.
+      // A method is a function associated with an object.
+      driveToWork: function() {
+
+      // When we say "this" (as in this.mileage) we are referring to the object the method is a part of.
+      // In this case, we will alert the mileage of the car object.
+      alert("Old Mileage: " + this.mileage);
+
+      // Adding 8 to the car's mileage.
+      this.mileage = this.mileage + 8;
+
+      // Alerting the car's new mileage.
+      alert("New mileage: " + this.mileage);
+      },
+
+  // The driveAroundWorld method adds 24,000 miles to our car, sets isWorking to false, and makes some alerts.
+  //driveAroundWorld: function() {
+
+  //alert("Old Mileage: " + this.mileage);
+
+  //this.mileage = this.mileage + 24000;
+
+  //alert("New Mileage: " + this.mileage);
+  //alert("Car needs a tuneup!");
+
+  //this.isWorking = false;
+//},
+
+// The getTuneUp method sets isWorking to true and alerts a message.
+getTuneUp: function() {
+  //alert("Car is ready to go!");
+  this.isWorking = true;
+},
+
+// The honk method alerts a honking message.
+honk: function() {
+  alert("Honk! Honk!");
+}
+};
+
+
+// How would we log...
+
+// The car's make?
+console.log(car.make);
+
+// The car's model?
+console.log(car.model);
+
+// The car's mileage?
+console.log(car.mileage);
+
+// How would we run the car's driveToWork method?
+// car.driveToWork();
+
+// How would we run the car's driveAroundWorld method?
+// car.driveAroundWorld();
+
+// How would we run the getTuneUp method?
+// car.getTuneUp();
+
+</script>
+
+<!-- Header -->
+<header id="masthead" class="navbar bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">Better Word Guess</a>
+  </nav>
+  </header>
+<!-- End Header -->
+
+<!-- Game Overview --> 
+<div id="game">
+  <h1>Play the word guess game!</h1>
+      <h2>Type a letter on your keyboard to get started. </h2>
+</div>
+
+<!-- Game Output --> 
+<div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="jumbotron">
+            <h2>You just typed <span id="user-text"><strong>...Nothing.</strong></span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- We have to put this at the end of our document to ensure the user-text
+         span exists when we try to access it. -->
+    <script type="text/javascript">
+      // Let's start by grabbing a reference to the <span> below.
+      var userText = document.getElementById("user-text");
+
+      // Next, we give JavaScript a function to execute when onkeyup event fires.
+      document.onkeyup = function(event) {
+        userText.textContent = event.key;
+      };
+
+
+
+    </script>
+  </body>
+</html>

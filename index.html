@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Word Guess Game!</title>
+   <!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> 
+    <script src="assets/js/wguess.js"></script> 
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  <body>
+
+<script>
+</script>
+
+<!-- Header -->
+<header id="masthead" class="navbar bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">Better Word Guess</a>
+  </nav>
+  </header>
+<!-- End Header -->
+
+<!-- Game Overview 
+<div id="game">
+  <h1>Play the word guess game!</h1>
+</div>
+<div id="demo">
+  demo
+</div>--> 
+
+<script>
+//  document.getElementById("demo").innerHTML =
+//  categories.threeword[1].word + " " + categories.threeword[1].desc;
+</script>
+
+<!-- Game Output --> 
+<div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="jumbotron typewriter">
+              <p>Play the word guess game? ... </p>
+              <p>Please choose your word category below.</p>
+              <!--                 <span id="user-text"><strong>.Y/n</strong></span>
+ <h2>You just typed </span></h2>-->
+          </div>
+          <div>
+              <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of 3 letters">
+                threeletter</button>
+              <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of Action">
+                verbs</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- We have to put this at the end of our document to ensure the user-text
+         span exists when we try to access it. -->
+    <script type="text/javascript">
+      // Let's start by grabbing a reference to the <span> below.
+      var userText = document.getElementById("user-text");
+
+      // Next, we give JavaScript a function to execute when onkeyup event fires.
+      document.onkeyup = function(event) {
+        userText.textContent = event.key;
+        printWord('threeletter');
+      };
+    </script>
+  </body>
+</html>

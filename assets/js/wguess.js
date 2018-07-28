@@ -35,7 +35,7 @@ var categories =
         {"word":"lox","desc":"N. Amer. smoked salmon"},
         {"word":"lux","desc":"a unit of illumination"},
         {"word":"max","desc":"maximum"},
-        {"word":"Mex","desc":"Mexican"},
+        {"word":"mex","desc":"short for mexican"},
         {"word":"mix","desc":"to blend or combine"},
         {"word":"nix","desc":"nothing"},
         {"word":"pax","desc":"a call for a truce"},
@@ -94,16 +94,6 @@ function updateGuesses(letter) {
   }
 
 // Choose category > The word list 
-var list = function () {
-    if (chosenCategory === categories[0]) {
-      catagoryName.innerHTML = "3 letter words";
-      console.log("test out")
-    } else if (chosenCategory === categories[1]) {
-      catagoryName.innerHTML = "English Verbs";
-    } else if (chosenCategory === categories[2]) {
-      catagoryName.innerHTML = "States";
-    }
-  }
   // ¯\_(ツ)_/¯
 
     var catString = JSON.stringify(categories);
@@ -181,7 +171,7 @@ var list = function () {
         }
 
         document.getElementById("jtron-text").innerHTML = correctTries.join(' ');
-        document.getElementById("jtron-text2").innerHTML = "Your word is " + n + " characters." ;        
+        document.getElementById("jtron-text2").innerHTML = "Your word has " + n + " characters." ;        
         document.getElementById("jtron-text3").innerHTML = "Remaining tries: " + tries;
         
           document.onkeyup = function (event) {
@@ -190,4 +180,3 @@ var list = function () {
             checkWin();
           };
         }
-

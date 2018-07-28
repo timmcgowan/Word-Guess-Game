@@ -1,6 +1,4 @@
-var game
-
-
+var gamestart = ''; //gamestarted?
 var valid_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's','t', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 var cat;              // Array of categories
@@ -23,8 +21,8 @@ var list = function () {
     }
   }
   // ¯\_(ツ)_/¯
-//var cat_data = [
-let categories = 
+
+var categories = 
     {
     "threeletter":[
         {"word":"axe","desc":"a chopping tool"},
@@ -73,25 +71,22 @@ let categories =
         {"word":"zit","desc":"a spot"},
         {"word":"zol","desc":"S. African a hand-rolled cigarette"},
         {"word":"zoo","desc":"a place where wild animals are kept"}
-        ] 
+        ],
+     "verbs":[
+        {"word":"run","desc":"move legs fast"},
+        {"word":"dance","desc":"to move to a beat"}
+       ]
     }
-    
-    //,{
-    //    "verbs":[
-    //        {"word":"run","desc":"move legs fast"},
-    //        {"word":"dance","desc":"to move to a beat"}
-    //    ]
-    //} ]
 
     var catString = JSON.stringify(categories);
     var catObj = (JSON.parse(catString));
-  //  var catArr = catObj.words;
- 
+    //  var catArr = catObj.words;
+    
     function printWord(catSelection) {
-        console.log (catString);
-        for (var j = 0; j < catObj.threeletter.length; j++) {
-            console.log ("Cat Word:" + " \" " + j + " \" " + catObj.threeletter[j].word); 
-        }
+    console.log (catString);
+    for (var j = 0; j < catObj.threeletter.length; j++) {
+        console.log ("Cat Word:" + " \" " + j + " \" " + catObj.threeletter[j].word); 
+    }
 
         //var objectKeys = Object.keys(catObj);
         console.log(catSelection);
@@ -100,6 +95,38 @@ let categories =
             console.log ("Cat Words " + catObj[catSelection].i.word); 
             console.log ("Cat Word Desc " + catObj[catSelection].i.desc);
         }
+    }
+
+    //Determine number of words in
+    function evalword(_word){
+        let n = _word.length;
+        return n;
+    }
+
+    function playgame(ws){
+
+        for (var c = 0; c < catObj.length; c++) {
+            console.log ("Categery:" + " \" " + c + " \" " + catObj[c]); 
+        }
+        var gword = "";
+        var x = '';
+        var wid = '';
+        if (ws = "threeletter") {
+            x = catObj.threeletter.length;
+            wid = Math.floor(Math.random() * x);
+            gword = catObj.threeletter[wid].word;
+        } else {
+            x = catObj.verbs.length;
+            wid = Math.floor(Math.random() * x);
+            gword = catObj.verbs[wid].word;
+        }
+        //let objsize = catObj.verbs
+        // Generate ID
+        //let wid = Math.floor(Math.random() * 10);
+        //let gword = catObj.verbs[wid].word;
+        let n = evalword(gword)
+        document.getElementById("jtron-text").innerHTML = "Your word is " + n + " characters." ;
+       // document.getElementById("jtron-text").innerHTML =  "Your word is " + Math.floor(Math.random() * 10);
     }
 
 // Count choices 

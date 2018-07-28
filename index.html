@@ -41,15 +41,15 @@
       <div class="row">
         <div class="col-md-offset-2 col-md-8">
           <div class="jumbotron typewriter">
-              <p>Play the word guess game? ... </p>
+              <p id="jtron-text">Play the word guess game? ... </p>
               <p>Please choose your word category below.</p>
               <!--                 <span id="user-text"><strong>.Y/n</strong></span>
  <h2>You just typed </span></h2>-->
           </div>
           <div>
-              <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of 3 letters">
+              <button onclick="playgame('threeletter')" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of 3 letters">
                 threeletter</button>
-              <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of Action">
+              <button onclick="playgame('verbs')" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of Action">
                 verbs</button>
           </div>
         </div>
@@ -59,14 +59,16 @@
     <!-- We have to put this at the end of our document to ensure the user-text
          span exists when we try to access it. -->
     <script type="text/javascript">
+    
+
       // Let's start by grabbing a reference to the <span> below.
       var userText = document.getElementById("user-text");
 
       // Next, we give JavaScript a function to execute when onkeyup event fires.
-      document.onkeyup = function(event) {
-        userText.textContent = event.key;
-        printWord('threeletter');
-      };
+    //  document.onkeyup = function(event) {
+    //    userText.textContent = event.key;
+    //    printWord('threeletter');
+    //  };
     </script>
   </body>
 </html>

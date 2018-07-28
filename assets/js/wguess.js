@@ -71,6 +71,9 @@ var categories =
         {"word":"walk","desc":"taking steps"},
         {"word":"jump","desc":"to leave the ground with your feet"},
         {"word":"stand","desc":"to stop sitting"},
+        {"word":"spin","desc":"makes you dizzy"},
+        {"word":"sing","desc":"la lah la la lah"},
+        {"word":"clean","desc":"to pick up"},
        ]
     }
 

@@ -4,6 +4,7 @@ var valid_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'm
 
 var cat;              // categories * not used yet.
 var gword;            // Selected word * set by genWord.
+var gdesc;            // Selected word description (hint).
 var guess;           // Geuss
 var ghistory = [ ];   // history of letters guessed
 var tries = 13 ;          // Remaining Tries
@@ -12,11 +13,6 @@ var spaces;           // Number of spaces in word
 var remainingTries; 
 var correctTries    ; 
 var wrongTries;
-
-// elements to update
-var wordElement = document.getElementById('jtron-text');
-var letterCountElement = document.getElementById('letterCount');
-var lettersGuessedElement = document.getElementById('jtron-text3');
 
 // word database (json of course, future API? When I have time.  ¯\_(ツ)_/¯ )
 var categories = 
@@ -137,23 +133,21 @@ var list = function () {
 
     function checkWin() {
         if (correctTries.indexOf('_') === -1) {
-            document.getElementById("jtron-text") = "&nbsp\;"
-            document.getElementById("jtron-text2") = "&nbsp\;"
-            document.getElementById("jtron-text3") = "You have Won!"
-            document.getElementById("jtron-text4") = "&nbsp\;"
-            document.getElementById("jtron-text5") = "&nbsp\;"
+            document.getElementById("jtron-text4").innerHTML = "You have Won!";
+            document.getElementById("jtron-text5").innerHTML = "&nbsp;";
           //  alert('You Won!');
+        } else if (tries < 4 && tries != 0) {
+            document.getElementById("jtron-text4").innerHTML = "You have " + tries + " lives"  ;
+            document.getElementById("jtron-text5").innerHTML = "Consider this hint: <b><u>" + gdesc + "</u></b>";
+          //alert('You Lost!');
         } else if (tries === 0) {
-            document.getElementById("jtron-text") = "&nbsp\;"
-            document.getElementById("jtron-text2") = "&nbsp\;"
-            document.getElementById("jtron-text3") = "You have Lost!"
-            document.getElementById("jtron-text4") = "&nbsp\;"
-            document.getElementById("jtron-text5") = "&nbsp\;"
+            document.getElementById("jtron-text4").innerHTML = "You have Lost!";
+            document.getElementById("jtron-text5").innerHTML = "&nbsp;";
           //alert('You Lost!');
         }
       }
 
-    function playgame(ws) {
+      function playgame(ws) {
         wrongTries = [];
         correctTries = [];  
         for (var c = 0; c < catObj.length; c++) {
@@ -167,15 +161,19 @@ var list = function () {
             x = catObj.threeletter.length;
             wid = Math.floor(Math.random() * x);
             gword = catObj.threeletter[wid].word;
+            gdesc = catObj.threeletter[wid].desc;
         } else {
             x = catObj.verbs.length;
             wid = Math.floor(Math.random() * x);
             gword = catObj.verbs[wid].word;
+            gdesc = catObj.verbs[wid].desc;
         }
         //let objsize = catObj.verbs
         // Generate ID
         //let wid = Math.floor(Math.random() * 10);
         //let gword = catObj.verbs[wid].word;
+
+        // create this to evaluate a word, but may be redundant... 
         let n = evalword(gword)
         // Generate underscores
         for (var i = 0; i < gword.length; i++) {
@@ -190,19 +188,6 @@ var list = function () {
             var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
             updateGuesses(letterGuessed);
             checkWin();
-        };
+          };
         }
-
-// Count choices 
-  let results = function () {
-    showTries.innerHTML = "You have " + tries + " lives";
-    if (tries < 1) {
-      showTries.innerHTML = "Game Over";
-    }
-    for (var i = 0; i < geusses.length; i++) {
-      if (counter + space === geusses.length) {
-        showTries.innerHTML = "You Win!";
-      }
-    }
-  }
 

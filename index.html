@@ -27,14 +27,7 @@
 <div id="game">
   <h1>Play the word guess game!</h1>
 </div>
-<div id="demo">
-  demo
-</div>--> 
-
-<script>
-//  document.getElementById("demo").innerHTML =
-//  categories.threeword[1].word + " " + categories.threeword[1].desc;
-</script>
+--> 
 
 <!-- Game Output --> 
 <div class="container">
@@ -42,9 +35,10 @@
         <div class="col-md-offset-2 col-md-8">
           <div class="jumbotron typewriter">
               <p id="jtron-text">Play the word guess game? ... </p>
-              <p>Please choose your word category below.</p>
-              <!--                 <span id="user-text"><strong>.Y/n</strong></span>
- <h2>You just typed </span></h2>-->
+              <p id="jtron-text2">Please choose your word category below.</p>
+              <p id="jtron-text3"></p>
+              <p id="jtron-text4"></p> 
+              <p id="jtron-text5"></p>
           </div>
           <div>
               <button onclick="playgame('threeletter')" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of 3 letters">
@@ -52,23 +46,10 @@
               <button onclick="playgame('verbs')" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Words of Action">
                 verbs</button>
           </div>
+          <div id="letters">&nbsp;</div>
         </div>
       </div>
     </div>
-
-    <!-- We have to put this at the end of our document to ensure the user-text
-         span exists when we try to access it. -->
-    <script type="text/javascript">
-    
-
-      // Let's start by grabbing a reference to the <span> below.
-      var userText = document.getElementById("user-text");
-
-      // Next, we give JavaScript a function to execute when onkeyup event fires.
-    //  document.onkeyup = function(event) {
-    //    userText.textContent = event.key;
-    //    printWord('threeletter');
-    //  };
-    </script>
+ 
   </body>
 </html>

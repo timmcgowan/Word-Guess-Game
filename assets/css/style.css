@@ -5,6 +5,15 @@ body {
   background-position:center;
 }
 
+#letters {
+  /* Positioning */
+  margin: 0 0 0 0;
+  overflow: auto;
+
+  /* Typography */
+  color: #fff;
+}
+
 #masthead {
   /* Positioning */
   margin: 0 0 0 0;

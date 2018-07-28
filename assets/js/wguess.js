@@ -1,27 +1,24 @@
+// Establish the global variables
 var gamestart = ''; //gamestarted?
 var valid_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's','t', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-var cat;              // Array of categories
-var word ;            // Selected word
-var guess ;           // Geuss
+var cat;              // categories * not used yet.
+var gword;            // Selected word * set by genWord.
+var guess;           // Geuss
 var ghistory = [ ];   // history of letters guessed
-var remtries ;          // Remaining Tries
+var tries = 13 ;          // Remaining Tries
 var counter ;         // Count geusses
 var spaces;           // Number of spaces in word
+var remainingTries; 
+var correctTries    ; 
+var wrongTries;
 
-// Choose category > The word list 
-var list = function () {
-    if (chosenCategory === categories[0]) {
-      catagoryName.innerHTML = "3 letter words";
-      console.log("test out")
-    } else if (chosenCategory === categories[1]) {
-      catagoryName.innerHTML = "English Verbs";
-    } else if (chosenCategory === categories[2]) {
-      catagoryName.innerHTML = "States";
-    }
-  }
-  // ¯\_(ツ)_/¯
+// elements to update
+var wordElement = document.getElementById('jtron-text');
+var letterCountElement = document.getElementById('letterCount');
+var lettersGuessedElement = document.getElementById('jtron-text3');
 
+// word database (json of course, future API? When I have time.  ¯\_(ツ)_/¯ )
 var categories = 
     {
     "threeletter":[
@@ -74,9 +71,44 @@ var categories =
         ],
      "verbs":[
         {"word":"run","desc":"move legs fast"},
-        {"word":"dance","desc":"to move to a beat"}
+        {"word":"dance","desc":"to move to a beat"},
+        {"word":"walk","desc":"taking steps"},
+        {"word":"jump","desc":"to leave the ground with your feet"},
+        {"word":"stand","desc":"to stop sitting"},
        ]
     }
+
+function updateGuesses(letter) {
+    tries--; // decrement guesses left
+    document.getElementById("jtron-text3").innerHTML = "Remaining tries: " + tries;
+  
+    if (gword.indexOf(letter) === -1) { // letter is NOT in the word
+      wrongTries.push(letter); // update letters guessed
+      document.getElementById('letters').innerHTML = wrongTries.join(', ');
+    } else { // letter IS in the word
+      // replace underscore with the letter
+      for (var i = 0; i < gword.length; i++) {
+        if (gword[i] === letter) {
+          correctTries[i] = letter;
+        }
+      }
+  
+      document.getElementById('jtron-text').innerHTML = correctTries.join(' ');
+    }
+  }
+
+// Choose category > The word list 
+var list = function () {
+    if (chosenCategory === categories[0]) {
+      catagoryName.innerHTML = "3 letter words";
+      console.log("test out")
+    } else if (chosenCategory === categories[1]) {
+      catagoryName.innerHTML = "English Verbs";
+    } else if (chosenCategory === categories[2]) {
+      catagoryName.innerHTML = "States";
+    }
+  }
+  // ¯\_(ツ)_/¯
 
     var catString = JSON.stringify(categories);
     var catObj = (JSON.parse(catString));
@@ -103,15 +135,35 @@ var categories =
         return n;
     }
 
-    function playgame(ws){
+    function checkWin() {
+        if (correctTries.indexOf('_') === -1) {
+            document.getElementById("jtron-text") = "&nbsp\;"
+            document.getElementById("jtron-text2") = "&nbsp\;"
+            document.getElementById("jtron-text3") = "You have Won!"
+            document.getElementById("jtron-text4") = "&nbsp\;"
+            document.getElementById("jtron-text5") = "&nbsp\;"
+          //  alert('You Won!');
+        } else if (tries === 0) {
+            document.getElementById("jtron-text") = "&nbsp\;"
+            document.getElementById("jtron-text2") = "&nbsp\;"
+            document.getElementById("jtron-text3") = "You have Lost!"
+            document.getElementById("jtron-text4") = "&nbsp\;"
+            document.getElementById("jtron-text5") = "&nbsp\;"
+          //alert('You Lost!');
+        }
+      }
 
+    function playgame(ws) {
+        wrongTries = [];
+        correctTries = [];  
         for (var c = 0; c < catObj.length; c++) {
             console.log ("Categery:" + " \" " + c + " \" " + catObj[c]); 
         }
-        var gword = "";
+       // var gword = "";
         var x = '';
         var wid = '';
-        if (ws = "threeletter") {
+        
+        if (ws == "threeletter") {
             x = catObj.threeletter.length;
             wid = Math.floor(Math.random() * x);
             gword = catObj.threeletter[wid].word;
@@ -125,9 +177,21 @@ var categories =
         //let wid = Math.floor(Math.random() * 10);
         //let gword = catObj.verbs[wid].word;
         let n = evalword(gword)
-        document.getElementById("jtron-text").innerHTML = "Your word is " + n + " characters." ;
-       // document.getElementById("jtron-text").innerHTML =  "Your word is " + Math.floor(Math.random() * 10);
-    }
+        // Generate underscores
+        for (var i = 0; i < gword.length; i++) {
+            correctTries.push('_');
+        }
+
+        document.getElementById("jtron-text").innerHTML = correctTries.join(' ');
+        document.getElementById("jtron-text2").innerHTML = "Your word is " + n + " characters." ;        
+        document.getElementById("jtron-text3").innerHTML = "Remaining tries: " + tries;
+        
+          document.onkeyup = function (event) {
+            var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+            updateGuesses(letterGuessed);
+            checkWin();
+        };
+        }
 
 // Count choices 
   let results = function () {

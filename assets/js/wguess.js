@@ -1,17 +1,17 @@
 // Establish the global variables
-var gamestart = ''; //gamestarted?
+var endgame = 0; // gameover?
 var valid_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's','t', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 var cat;              // categories * not used yet.
 var gword;            // Selected word * set by genWord.
 var gdesc;            // Selected word description (hint).
 var guess;           // Geuss
-var ghistory = [ ];   // history of letters guessed
+var ghistory = [];   // history of letters guessed
 var tries = 13 ;          // Remaining Tries
 var counter ;         // Count geusses
 var spaces;           // Number of spaces in word
 var remainingTries; 
-var correctTries    ; 
+var correctTries ; 
 var wrongTries;
 
 // word database (json of course, future API? When I have time.  ¯\_(ツ)_/¯ )
@@ -78,21 +78,23 @@ var categories =
     }
 
 function updateGuesses(letter) {
-    tries--; // decrement guesses left
-    document.getElementById("jtron-text3").innerHTML = "Remaining tries: " + tries;
-  
-    if (gword.indexOf(letter) === -1) { // letter is NOT in the word
-      wrongTries.push(letter); // update letters guessed
-      document.getElementById('letters').innerHTML = wrongTries.join(', ');
-    } else { // letter IS in the word
-      // replace underscore with the letter
-      for (var i = 0; i < gword.length; i++) {
-        if (gword[i] === letter) {
-          correctTries[i] = letter;
+// check to see if letter was already typed.
+    if (!ghistory.includes(letter)) {
+      tries--; // decrement guesses left
+      if (gword.indexOf(letter) === -1) { // letter is NOT in the word
+        wrongTries.push(letter); // update letters guessed
+        document.getElementById('letters').innerHTML = wrongTries.join(', ');
+        document.getElementById("jtron-text3").innerHTML = "Remaining tries: " + tries;
+      } else { // letter IS in the word
+        // replace underscore with the letter
+        for (var i = 0; i < gword.length; i++) {
+          if (gword[i] === letter) {
+            correctTries[i] = letter;
+          }
         }
+        document.getElementById('jtron-text').innerHTML = correctTries.join(' ');
       }
-  
-      document.getElementById('jtron-text').innerHTML = correctTries.join(' ');
+    ghistory.push(letter);
     }
   }
 
@@ -128,58 +130,65 @@ function updateGuesses(letter) {
         if (correctTries.indexOf('_') === -1) {
             document.getElementById("jtron-text4").innerHTML = "You have Won!";
             document.getElementById("jtron-text5").innerHTML = "&nbsp;";
+            endgame = 1;
           //  alert('You Won!');
         } else if (tries < 4 && tries != 0) {
-            document.getElementById("jtron-text4").innerHTML = "You have " + tries + " lives"  ;
-            document.getElementById("jtron-text5").innerHTML = "Consider this hint: <b><u>" + gdesc + "</u></b>";
+            document.getElementById("jtron-text4").innerHTML = "You have " + tries + " tries left!"  ;
+            document.getElementById("jtron-text5").innerHTML = "onsider this hint: <b><u>" + gdesc + "</u></b>";
           //alert('You Lost!');
         } else if (tries === 0) {
             document.getElementById("jtron-text4").innerHTML = "You have Lost!";
             document.getElementById("jtron-text5").innerHTML = "&nbsp;";
+            endgame = 1;
           //alert('You Lost!');
         }
       }
 
       function playgame(ws) {
-        wrongTries = [];
-        correctTries = [];  
-        for (var c = 0; c < catObj.length; c++) {
-            console.log ("Categery:" + " \" " + c + " \" " + catObj[c]); 
-        }
-       // var gword = "";
-        var x = '';
-        var wid = '';
-        
-        if (ws == "threeletter") {
-            x = catObj.threeletter.length;
-            wid = Math.floor(Math.random() * x);
-            gword = catObj.threeletter[wid].word;
-            gdesc = catObj.threeletter[wid].desc;
-        } else {
-            x = catObj.verbs.length;
-            wid = Math.floor(Math.random() * x);
-            gword = catObj.verbs[wid].word;
-            gdesc = catObj.verbs[wid].desc;
-        }
-        //let objsize = catObj.verbs
-        // Generate ID
-        //let wid = Math.floor(Math.random() * 10);
-        //let gword = catObj.verbs[wid].word;
+            wrongTries = [];
+            correctTries = [];  
+            for (var c = 0; c < catObj.length; c++) {
+                console.log ("Categery:" + " \" " + c + " \" " + catObj[c]); 
+            }
+          // var gword = "";
+            var x = '';
+            var wid = '';
+            
+            if (ws == "threeletter") {
+                x = catObj.threeletter.length;
+                wid = Math.floor(Math.random() * x);
+                gword = catObj.threeletter[wid].word;
+                gdesc = catObj.threeletter[wid].desc;
+            } else {
+                x = catObj.verbs.length;
+                wid = Math.floor(Math.random() * x);
+                gword = catObj.verbs[wid].word;
+                gdesc = catObj.verbs[wid].desc;
+            }
+            //let objsize = catObj.verbs
+            // Generate ID
+            //let wid = Math.floor(Math.random() * 10);
+            //let gword = catObj.verbs[wid].word;
 
-        // create this to evaluate a word, but may be redundant... 
-        let n = evalword(gword)
-        // Generate underscores
-        for (var i = 0; i < gword.length; i++) {
-            correctTries.push('_');
-        }
+            // create this to evaluate a word, but may be redundant... 
+            let n = evalword(gword)
+            // Generate underscores
+            for (var i = 0; i < gword.length; i++) {
+                correctTries.push('_');
+            }
 
-        document.getElementById("jtron-text").innerHTML = correctTries.join(' ');
-        document.getElementById("jtron-text2").innerHTML = "Your word has " + n + " characters." ;        
-        document.getElementById("jtron-text3").innerHTML = "Remaining tries: " + tries;
-        
-          document.onkeyup = function (event) {
-            var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
-            updateGuesses(letterGuessed);
-            checkWin();
-          };
+            document.getElementById("jtron-text").innerHTML = correctTries.join(' ');
+            document.getElementById("jtron-text2").innerHTML = "Your word has " + n + " characters." ;        
+            document.getElementById("jtron-text3").innerHTML = "Remaining tries: " + tries;
+            
+              document.onkeyup = function (event) {
+                var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+                // Add check for valid chars first.  Can be improved.
+                if (valid_chars.includes(letterGuessed)){
+                  if (endgame === 0) {
+                    updateGuesses(letterGuessed);
+                    checkWin();
+                  }
+                }
+              };
         }
